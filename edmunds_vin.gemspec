@@ -32,4 +32,5 @@ Gem::Specification.new do |spec|
   spec.add_development_dependency "rspec", "~> 3.0"
   spec.add_development_dependency "cucumber", "1.3.20"
   spec.add_development_dependency "json-schema", "2.5.2"
+  spec.add_development_dependency "rspec-json_expectations", "1.2.0"
 end

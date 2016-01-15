@@ -12,6 +12,7 @@ describe EdmundsVin do
 
       it "requires an API Key" do
         expect{EdmundsVin::Decoder.new}.to raise_error(ArgumentError)
+        expect{EdmundsVin::Decoder.new('')}.to raise_error(ArgumentError)
       end
 
     end
@@ -19,7 +20,7 @@ describe EdmundsVin do
     describe '#decode' do
  
       it 'requires a vin' do
-        decoder = EdmundsVin::Decoder.new('')
+        decoder = EdmundsVin::Decoder.new(ENV['EDMUNDS_API_KEY'])
         expect{decoder.decode()}.to raise_error(ArgumentError)
       end
 

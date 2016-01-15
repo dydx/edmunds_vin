@@ -2,14 +2,12 @@ require "edmunds_vin/version"
 require 'net/http'
 require 'json'
 
-# VIN
-#
-# Format
-# API Key
-
 module EdmundsVin
+
   class Decoder
+
     def initialize(key)
+      raise ArgumentError unless !key.empty?
       @key = key
       @format = 'json'
     end
@@ -20,5 +18,7 @@ module EdmundsVin
       response = Net::HTTP.get(query_url)
       response
     end
+
   end
+
 end

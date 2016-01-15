@@ -9,9 +9,9 @@ Gem::Specification.new do |spec|
   spec.authors       = ["Joshua Sandlin"]
   spec.email         = ["joshua.sandlin@gmail.com"]
 
-  spec.summary       = %q{TODO: Write a short summary, because Rubygems requires one.}
-  spec.description   = %q{TODO: Write a longer description or delete this line.}
-  spec.homepage      = "TODO: Put your gem's website or public repo URL here."
+  spec.summary       = %q{Decode Vehicle Identification Numbers with the Edmunds API}
+  spec.description   = %q{Decode Vehicle Identification Numbers with the Edmunds API}
+  spec.homepage      = "https://github.com/dydx/edmunds_vin.git"
   spec.license       = "MIT"
 
   # Prevent pushing this gem to RubyGems.org by setting 'allowed_push_host', or

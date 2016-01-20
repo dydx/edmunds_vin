@@ -30,6 +30,12 @@ Or install it yourself as:
 
 >*NoteL* `response` is a JSON document 
 
+## Edmunds Developer API
+
+For information about the Edmunds Developer API, visit http://developer.edmunds.com.
+
+I am not affiliated with Edmunds, and I do not hold any responsibility for your developers agreement with them.
+
 ## License
 
 The gem is available as open source under the terms of the [MIT License](http://opensource.org/licenses/MIT).

@@ -5,7 +5,7 @@ require 'edmunds_vin/version'
 
 Gem::Specification.new do |spec|
   spec.name          = "edmunds_vin"
-  spec.version       = EdmundsVin::VERSION
+  spec.version       = Edmunds::VERSION
   spec.authors       = ["Joshua Sandlin"]
   spec.email         = ["joshua.sandlin@gmail.com"]
 
@@ -23,4 +23,7 @@ Gem::Specification.new do |spec|
   spec.add_development_dependency "rake", "~> 10.0"
   spec.add_development_dependency "rspec", "~> 3.0"
   spec.add_development_dependency "rspec-json_expectations", "1.2.0"
+
+  spec.add_dependency "httparty", "~> 0.13.1"
+
 end

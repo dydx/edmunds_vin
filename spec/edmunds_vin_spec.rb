@@ -1,45 +1,45 @@
 require 'spec_helper'
 
-describe EdmundsVin do
-
+describe Edmunds do
   it 'has a version number' do
-    expect(EdmundsVin::VERSION).not_to be nil
+    expect(Edmunds::VERSION).not_to be nil
   end
 
-  describe EdmundsVin::Decoder do
-
+  describe Edmunds::Vin do
     describe '.new' do
-
-      it "requires an API Key" do
-        expect{EdmundsVin::Decoder.new}.to raise_error(ArgumentError)
-        expect{EdmundsVin::Decoder.new('')}.to raise_error(ArgumentError)
+      it "requires an API key" do
+        expect { Edmunds::Vin.new('') }.to raise_error(ArgumentError)
       end
-
     end
 
-    describe '#decode' do
- 
-      it 'requires a vin' do
-        decoder = EdmundsVin::Decoder.new(ENV['EDMUNDS_API_KEY'])
-        expect{decoder.decode()}.to raise_error(ArgumentError)
+    describe '.full' do
+      let(:api) { Edmunds::Vin.new(ENV['EDMUNDS_API_KEY']) }
+
+      it "requires a valid VIN" do
+        expect { api.full('') }.to raise_error(ArgumentError)
       end
 
-      it 'requires that a vin be 17 characters long' do
-        decoder = EdmundsVin::Decoder.new(ENV['EDMUNDS_API_KEY'])
-        expect{decoder.decode('1234')}.to raise_error(ArgumentError)
-        expect{decoder.decode('238984923849023894029834')}.to raise_error(ArgumentError)
-      end
-
-      it 'resturns a JSON document' do
-        decoder = EdmundsVin::Decoder.new(ENV['EDMUNDS_API_KEY'])
-        response = decoder.decode('4T1BK1EB6DU056165')
-        expect(response).to include_json(
-          "squishVin": "4T1BK1EBDU"
+      it "returns a JSON response" do
+        expect( api.full('4T1BK1EB6DU056165') ).to include_json(
+          "squishVin": '4T1BK1EBDU'
         )
       end
-
     end
 
+    describe '.basic' do
+      let(:api) { Edmunds::Vin.new(ENV['EDMUNDS_API_KEY']) }
+
+      it "requires a valid VIN" do
+        expect { api.basic('') }.to raise_error(ArgumentError)
+      end
+
+      it "returns a JSON response" do
+        expect( api.basic('4T1BK1EB6DU056165') ).to include_json(
+          "year": 2013,
+          "make": "Toyota",
+          "model": "Avalon"
+        )
+      end
+    end
   end
-  
 end

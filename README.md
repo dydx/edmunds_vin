@@ -24,10 +24,17 @@ Or install it yourself as:
 ## Usage
 
 1. `require 'edmunds_vin'`
-2. `decoder = EdmundsVin::Decoder.new(<API KEY>)`
-3. `response = decoder.decode(<17-DIGIT VIN>)`
+2. `decoder = Edmunds::Vin.new(<API KEY>)`
+3. `full_car_data = decoder.full(<17-DIGIT VIN>)`
+4. `basic_car_data = decoder.basic(<17-DIGIT VIN>)`
 
 >*NoteL* `response` is a JSON document 
+
+## Edmunds Developer API
+
+For information about the Edmunds Developer API, visit http://developer.edmunds.com.
+
+I am not affiliated with Edmunds, and I do not hold any responsibility for your developers agreement with them.
 
 ## License
 

@@ -1,45 +1,57 @@
 require "edmunds_vin/version"
-require 'net/http'
-require 'json'
+require 'httparty'
 
-VinData = Struct.new(:make, :model, :year, :engine, :transmission, :fuel)
-VinParser = -> raw {
-  VinData.new(
-    raw['make']['name'],
-    raw['model']['name'],
-    raw['years'][0]['year'],
-    {
-      'type' => raw['engine']['name'],
-      'code' => raw['engine']['manufacturerEngineCode']
-    },
-    {
-      'type' => raw['transmission']['transmissionType'],
-      'code' => raw['transmission']['name']
-    },
-    raw['engine']['type'],
-  )
-}
+module Edmunds
 
-module EdmundsVin
+  # Edmunds::Vin
+  class Vin
+    include HTTParty
 
-  class Decoder
+    base_uri "api.edmunds.com"
 
-    def initialize(key)
-      raise ArgumentError unless !key.empty?
+    # Edmunds::Vin.new
+    # @key is your Edmunds Developer API Key
+    # @format is the type of the response we need from the Edmunds API
+    # @version is the Edmunds API version we are using
+    def initialize(key, format: 'json', version: 'v2')
+      raise ArgumentError.new('Invalid API Key') unless !key.nil? && key.length > 10
       @key = key
-      @format = 'json'
+      @format = format
+      @version = version
     end
 
-    def decode(vin)
-      raise ArgumentError unless vin.length == 17
-      query_url = URI("https://api.edmunds.com/api/vehicle/v2/vins/#{vin}?fmt=#{@format}&api_key=#{@key}")
-      response = Net::HTTP.get(query_url)
-      decoded = JSON.parse(response)
-      formatted = VinParser.call(decoded)
+    private
+    def find(vin)
+      raise ArgumentError.new('Invalid VIN') unless vin.length == 17
+      self.class.get("/api/vehicle/#{@version}/vins/#{vin}?fmt=#{@format}&api_key=#{@key}")
+    end
 
-      formatted
+    public
+    # Edmunds::Vin#full
+    # vin is the Vehicle Identification Number you are querying against
+    #
+    # Returns the complete response from Edmunds
+    def full(vin)
+      find(vin).to_json
+    end
+
+    # Edmunds::Vin#basic
+    # vin is the Vehicle Identification Number you are querying against
+    #
+    # Returns a shortened response containing just year make and model
+    #
+    # NOTE this used to include more info, but the API responses
+    # for some cars is incomplete. I'd like some more reliable engine info
+    def basic(vin)
+      response = find(vin)
+      data = {
+        year: response['years'][0]['year'],
+        make: response['make']['name'],
+        model: response['model']['name'],
+      }
+
+      data.to_json
     end
 
   end
-
 end

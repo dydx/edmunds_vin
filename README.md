@@ -10,7 +10,7 @@ containing a given vehicles information.
 Add this line to your application's Gemfile:
 
 ```ruby
-gem 'edmunds_vin', :github => 'dydx/edmunds_vin'
+gem 'edmunds_vin'
 ```
 
 And then execute:

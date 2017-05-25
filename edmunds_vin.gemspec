@@ -25,5 +25,4 @@ Gem::Specification.new do |spec|
   spec.add_development_dependency "rspec-json_expectations", "1.2.0"
 
   spec.add_dependency "httparty", ">= 0.13.1"
-
 end
